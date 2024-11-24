@@ -45,6 +45,13 @@ def save_player(player_id: str, player_data: tuple[int, int, int]):
     В противном случае будет создана новая запись.
     """
     with conn:
+        # Контекстный менеджер (https://docs.python.org/3/library/sqlite3.html#sqlite3-connection-context-manager)
+        #
+        # Как `with` работает для экземпляра класса `Connection`?
+        #
+        # Если всё прошло без ошибок, то транзакция автоматически сохраняется (`commit`).
+        # Если возникла ошибка, то изменения отменяются (`rollback`).
+        # Примечание: менеджер контекста не закрывает объект `Connection`!
         cursor.execute(
             """
                 INSERT OR REPLACE INTO players 
